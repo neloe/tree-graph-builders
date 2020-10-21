@@ -11,7 +11,6 @@ class BT:
         graph = nx.DiGraph()
         nullct = 0
         for n in list(self.tree.keys()):
-            #print(n)
             if self.tree[n][0]:
                 graph.add_edge(n, self.tree[n][0])
                 if not n in self.tree:
@@ -62,7 +61,7 @@ class BT:
                 levels[n] = 1 + levels[parents[n]]
                 dx = (2 ** (treeheight-levels[n])) / 2
                 if not str(n).startswith('nullr'):
-                    if str(n).startswith('nulll') or n < parents[n]:
+                    if str(n).startswith('nulll') or n == self.tree[parents[n]][0]:
                         dx *= -1
                 pos[n] = (ppos[0]+dx, ppos[1] - self.dy)
         return pos

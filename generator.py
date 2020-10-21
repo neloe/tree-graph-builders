@@ -3,6 +3,7 @@ import tkinter.filedialog as tkfd
 import tkinter.messagebox as tkmb
 
 from bst import BST
+from heap import Heap
 from os import path
 
 from random import shuffle
@@ -17,7 +18,8 @@ class TestGen(tk.Frame):
         self.proj_btn = tk.Button(self, text='Project path', command=self.get_output_path)
         self.proj_btn.pack()
 
-        self.treeChoices = ['BST']
+        self.treeChoices = ['BST', 'Heap']
+        self.trees = {'BST': BST, 'Heap': Heap}
 
         self.treeTypeVar = tk.StringVar(self)
         self.treeTypeVar.set('BST')
@@ -70,15 +72,11 @@ class TestGen(tk.Frame):
             return
         donulls = bool(self.includeNull.get())
 
-        print(donulls)
         vals = list(range(100))
         for i in range(togen):
             shuffle(vals)
-            tree = None
-            if self.treeTypeVar.get() == 'BST':
-                tree = BST(vals[:numelms])
+            tree = self.trees[self.treeTypeVar.get()](vals[:numelms])
             tree.toPNG(path.join(self.out_dir, '{}{}-null{}'.format(self.treeTypeVar.get(), i, donulls)), donulls)
-
 
         tkmb.showinfo('Success', 'Trees generated')
 
