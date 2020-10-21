@@ -25,10 +25,13 @@ class BST(BT):
 
 
 if __name__ == "__main__":
-    t = BST()
+
     from random import shuffle
     vals = list(range(100))
     shuffle(vals)
+    t = BST(vals[:6])
+    t.toPNG('test2', True)
+    '''
     for i in range(10):
         t.insert(vals[i])
     print(t.tree)
@@ -45,3 +48,4 @@ if __name__ == "__main__":
     nx.draw(g, labels=labels, pos=t.nodePos(), node_color='w')
     plt.tight_layout()
     plt.savefig('test.png')
+    '''

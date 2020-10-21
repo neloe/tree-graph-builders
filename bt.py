@@ -5,12 +5,13 @@ class BT:
     def __init__(self):
         self.tree = defaultdict(lambda: [None, None])
         self.root = None
+        self.dy = .5
 
     def toDigraph(self, addnulls = False):
         graph = nx.DiGraph()
         nullct = 0
         for n in list(self.tree.keys()):
-            print(n)
+            #print(n)
             if self.tree[n][0]:
                 graph.add_edge(n, self.tree[n][0])
                 if not n in self.tree:
@@ -63,7 +64,7 @@ class BT:
                 if not str(n).startswith('nullr'):
                     if str(n).startswith('nulll') or n < parents[n]:
                         dx *= -1
-                pos[n] = (ppos[0]+dx, ppos[1] - 1)
+                pos[n] = (ppos[0]+dx, ppos[1] - self.dy)
         return pos
 
     def toPNG(self, filename, withNulls = False):
@@ -77,6 +78,7 @@ class BT:
         nx.draw(g, labels=labels, pos=self.nodePos(withNulls), node_color='w')
         plt.tight_layout()
         plt.savefig('{}.png'.format(filename))
+        plt.clf()
 
 
 
