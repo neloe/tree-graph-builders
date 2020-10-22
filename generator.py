@@ -26,6 +26,7 @@ class TestGen(tk.Frame):
         self.numTrees = tk.StringVar(self)
         self.treeSize = tk.StringVar(self)
         self.includeNull = tk.BooleanVar(self)
+        self.saveTraversals = tk.BooleanVar(self)
 
         treeTypeFrame = tk.Frame(self)
         tk.Label(treeTypeFrame, text='Type of Tree:').pack(side=tk.LEFT)
@@ -39,6 +40,7 @@ class TestGen(tk.Frame):
         tk.Label(optionsFrame, text='Size of Trees:').pack(side=tk.LEFT)
         tk.Entry(optionsFrame, textvariable=self.treeSize).pack(side=tk.LEFT)
         tk.Checkbutton(optionsFrame, text='Include nulls', variable=self.includeNull).pack(side=tk.LEFT)
+        tk.Checkbutton(optionsFrame, text='Save Traversals', variable=self.saveTraversals).pack(side=tk.LEFT)
 
 
         optionsFrame.pack()
@@ -77,6 +79,11 @@ class TestGen(tk.Frame):
             shuffle(vals)
             tree = self.trees[self.treeTypeVar.get()](vals[:numelms])
             tree.toPNG(path.join(self.out_dir, '{}{}-null{}'.format(self.treeTypeVar.get(), i, donulls)), donulls)
+            if self.saveTraversals.get():
+                with open('{}{}-null{}.traversal.txt', 'w') as f:
+                    f.write('Preorder: {}\n'.format(','.join(tree.preOrder())))
+                    f.write('Inorder: {}\n'.format(','.join(tree.inOrder())))
+                    f.write('Postorder: {}\n'.format(','.join(tree.postOrder())))
 
         tkmb.showinfo('Success', 'Trees generated')
 

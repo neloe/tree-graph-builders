@@ -79,6 +79,33 @@ class BT:
         plt.savefig('{}.png'.format(filename))
         plt.clf()
 
+    def inOrder(self):
+        return self._inOrder(self.root)
+
+    def _inOrder(self, n):
+        if not n:
+            return []
+        children = self.tree[n]
+        return self._inOrder(children[0]) + [n] + self._inOrder(children[1])
+
+    def preOrder(self):
+        return self._preOrder(self.root)
+
+    def _preOrder(self, n):
+        if not n:
+            return []
+        children = self.tree[n]
+        return [n] + self._preOrder(children[0]) + self._preOrder(children[1])
+
+    def postOrder(self):
+        return self._inOrder(self.root)
+
+    def _postOrder(self, n):
+        if not n:
+            return []
+        children = self.tree[n]
+        return self._postOrder(children[0]) + self._postOrder(children[1]) + [n]
+
 
 
 

@@ -30,7 +30,10 @@ if __name__ == "__main__":
     vals = list(range(100))
     shuffle(vals)
     t = BST(vals[:6])
-    t.toPNG('test2', True)
+    print(t.inOrder())
+    print(t.preOrder())
+    print(t.postOrder())
+    t.toPNG('test')
     '''
     for i in range(10):
         t.insert(vals[i])
